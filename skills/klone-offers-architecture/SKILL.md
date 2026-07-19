@@ -292,7 +292,7 @@ public class MyOfferSuper extends OfferSuper {
 Паки бывают двух типов: `PackPurchaseItem` (реальные деньги) и `PackShopItem` (внутриигровая валюта).  
 **`SubscriptionPurchaseItem` в офферах не используется** — подписки продаются отдельным механизмом.
 
-Полная документация: скилл `klone-pack-purchase-flow`.
+Полная документация: скилл `klone-offer-pack-purchase-flow`.
 
 ---
 
@@ -334,7 +334,7 @@ klone-mobile-server/src/com/social/game/klonemobile/
 
 ## Связанные скиллы
 
-- `klone-pack-purchase-flow` — механизм покупки паков (PackPurchaseItem, PackShopItem, платёжные процессоры)
+- `klone-offer-pack-purchase-flow` — механизм покупки паков (PackPurchaseItem, PackShopItem, платёжные процессоры)
 - `naslednik-offera-v-webshop` — интеграция оффера в вебшоп
 - `naslednik-offera-v-tyly` — интеграция оффера в тулу монетизации
 - `webshop-controller-chains` — цепочки вызовов, авторизация, платёж

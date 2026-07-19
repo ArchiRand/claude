@@ -80,6 +80,34 @@ PackPurchaseToPaymentProcessorMapper — processor function:
   - `Platform.ANY` — если задан `purchase`
   - Per-platform — если `platformPurchase` список не пуст
 
+### Кто вызывает `SinglePaymentManager.completePayment()`
+
+`SinglePaymentManager` сам не знает про конкретную платформу — до него платёж доводят платформенные валидаторы, каждый реализует `PermanentGameEventProcessor` и обрабатывает своё событие оплаты:
+
+| Валидатор | Платформа/система |
+|---|---|
+| `GooglePaymentValidator` | Android (Google Play) |
+| `AppleMobilePaymentValidator` | iOS |
+| `AmazonMobilePaymentValidator` | Amazon |
+| `HuaweiPaymentValidator` | Huawei |
+| `UwpMobilePaymentValidator` | UWP/Windows |
+| `DummyDesktopPaymentValidator` | десктоп (заглушка) |
+| `YookassaPaymentValidator` | Yookassa (RU-эквайринг) |
+| `FlexionPaymentValidator` | Flexion |
+| `WebshopPaymentService` | внутренний вебшоп |
+| `ToffeePayManager` | Gcommerce Toffee |
+
+Регистрация каждого валидатора как процессора событий — через свой Guice-модуль в `com.vizor.mobile.server.modules.payments` (например `PaymentsGoogleModule`).
+
+Пример цепочки (Google, `GooglePaymentValidator.java`):
+```
+process(session, AndroidMobilePaymentEvent)   // валидация чека через Google API
+    ↓
+completePayment(session, productPurchase, mobilePayment, event)   // достаёт orderId, inAppPurchaseId, amount, currency, token
+    ↓
+singlePaymentManager.completePayment(session, orderId, inAppPurchaseId, Platform.ANDROID, amountUser, currencyUser, purchaseToken)
+```
+
 ---
 
 ## Путь 2 — Внутриигровая валюта (`PackShopItem`)
@@ -161,8 +189,18 @@ klone-mobile-server/src/com/social/game/klonemobile/
     PackPurchaseToPaymentProcessorMapper.java  ← маппер платёж → reward + finish
   gamestate/helpers/
     BuyHandler.java                        ← покупка за внутриигровую валюту
-server-framework/.../payments/
-  SinglePaymentManager.java               ← точка входа реального платежа
+server-framework/mobile-fw-server/src/com/vizor/mobile/server/payments/
+  SinglePaymentManager.java               ← точка входа реального платежа (после валидации)
+  apple/AppleMobilePaymentValidator.java  ← вызывает SinglePaymentManager (iOS)
+  google/GooglePaymentValidator.java      ← вызывает SinglePaymentManager (Android)
+  amazon/AmazonMobilePaymentValidator.java ← вызывает SinglePaymentManager (Amazon)
+  huawei/HuaweiPaymentValidator.java      ← вызывает SinglePaymentManager (Huawei)
+  uwp/UwpMobilePaymentValidator.java      ← вызывает SinglePaymentManager (UWP)
+  desktop/DummyDesktopPaymentValidator.java ← вызывает SinglePaymentManager (десктоп)
+  yookassa/YookassaPaymentValidator.java  ← вызывает SinglePaymentManager (Yookassa)
+  flexion/FlexionPaymentValidator.java    ← вызывает SinglePaymentManager (Flexion)
+  webshop/WebshopPaymentService.java      ← вызывает SinglePaymentManager (вебшоп)
+  toffeepay/ToffeePayManager.java         ← вызывает SinglePaymentManager (Gcommerce Toffee)
 ```
 
 ---

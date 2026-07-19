@@ -282,8 +282,7 @@ klone/src/com/vizor/klone/ui/dynamicbank/
 
 ---
 
-## Связанные скилы
+## Связанные скиллы
 
 - `klone-offers-architecture` — система офферов (другой механизм монетизации)
-- `klone-feature-pack-purchase-flow` — механизм покупки PackPurchaseItem
-- `klone-client-architecture` — общая архитектура клиента
+- `klone-offer-pack-purchase-flow` — механизм покупки PackPurchaseItem в оферах

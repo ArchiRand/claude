@@ -1,5 +1,5 @@
 ---
-name: db-driven-offer-item
+name: naslednik-offera-v-tyly
 description: Перенос конфигурации XOfferItem из XML в монетизационную тулу: Model, Mapper, Provider, Validator, кнопки soft launch. Использовать при реализации нового типа оффера через веб-интерфейс.
 ---
 ## Что это

@@ -1,6 +1,6 @@
 ---
-name: table-button-handler
-description: Implement TableButtonActionHandler for monetization UI tool buttons, including 11-step cache invalidation chain. Use when adding buttons to @TableModel or implementing cache invalidation for a model.
+name: knopki-dlya-modeli
+description: Реализация TableButtonActionHandler для кнопок в UI монетизационной тулы, включая 11-шаговую цепочку инвалидации кэша. Используй при добавлении кнопок в @TableModel или реализации инвалидации кэша для модели.
 ---
 
 ## Интерфейс
