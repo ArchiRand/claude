@@ -1,6 +1,6 @@
 ---
 name: intellij-plugin-dev
-description: Разработка IntelliJ IDEA плагинов на Java 17. Использовать при создании или изменении любого кода плагина — PSI, references, providers, services, actions, inspections, GotoDeclaration и т.д.
+description: Разработка IntelliJ IDEA плагинов на Java 17 — PSI, references, providers, services, actions, inspections, GotoDeclaration, индексы и кеширование. Задаёт стиль кода, Javadoc, производительность Platform API и правила коммитов, принятые в личных плагин-проектах (bean-navigator-plugin, log-monitor-plugin, xstream-idea-plugin). Используй при создании или изменении любого кода плагина. Правила коммитов здесь свои (префиксы fix:/feat: без тикета) и в этих репах приоритетнее скилла commit-writer.
 ---
 
 # IntelliJ Plugin Dev — правила разработки
@@ -209,4 +209,9 @@ feat: навигация с дочернего XML-тега на поле Java-�
 ```bash
 ./gradlew --stop   # убить daemon
 ./gradlew compileJava   # повторить
+```
+
+После реализации любой задачи собирай плагин через
+```bash
+./gradlew buildPlugin
 ```
